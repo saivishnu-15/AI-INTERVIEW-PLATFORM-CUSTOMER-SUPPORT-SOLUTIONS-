@@ -1,1 +1,70 @@
 # AI-INTERVIEW-PLATFORM-CUSTOMER-SUPPORT-SOLUTIONS-
+
+# 🤖 AI Interview Preparation Platform
+
+A full-stack AI-powered interview training system that generates technical questions and evaluates answers using Google Gemini API.
+
+---
+
+## 🚀 Features
+
+- 🎯 Role-based interview questions (Frontend, Backend, etc.)
+- 🤖 AI-generated questions using Gemini API
+- 🧠 AI answer evaluation with feedback + scoring
+- 📊 Interview history tracking (MongoDB)
+- 🔁 Fallback system (works even if AI API fails)
+- 💬 Simple and clean UI
+
+---
+
+## 🛠️ Tech Stack
+
+- Frontend: React (Vite)
+- Backend: Node.js, Express.js
+- Database: MongoDB
+- AI: Google Gemini API
+- Styling: CSS
+
+client/ → React frontend
+server/ → Node backend
+
+## ⚙️ Setup Instructions
+### 1️⃣ Clone repository
+```bash
+git clone <https://github.com/saivishnu-15/AI-INTERVIEW-PLATFORM-CUSTOMER-SUPPORT-SOLUTIONS->
+OR <YOUR GITHUB LINK>
+
+Backend setup
+cd server
+npm install
+
+Create .env file:
+
+GEMINI_API_KEY=your_api_key
+MONGODB_URI=your_mongodb_uri
+
+Run backend:
+node server.js
+
+Frontend setup
+cd client
+npm install
+npm run dev
+
+API Endpoints
+POST /api/question → Generate interview question
+POST /api/answer → Evaluate answer
+GET /api/history → Get past interviews
+
+📌 How it works
+Select role
+Click “Generate Question”
+Write answer
+Get AI feedback + score
+View history
+
+Note
+Requires valid Gemini API key
+MongoDB must be connecteD
+
+## 📁 Project Structure
