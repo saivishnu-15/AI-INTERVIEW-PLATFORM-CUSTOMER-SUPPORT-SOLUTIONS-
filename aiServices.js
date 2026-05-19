@@ -1,102 +1,78 @@
 const axios = require("axios");
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
 
-// ✅ Your working model
-const MODEL = "models/gemini-2.0-flash";
+// ✅ BEST MODEL FROM YOUR LIST
+const MODEL = "llama-3.1-8b-instant";
 
-/* ---------------- Fallback (IMPORTANT for hackathon) ---------------- */
-const fallbackQuestion = (role) => {
-  const questions = [
-    "How would you debug a slow-loading web application?",
-    "Explain how you would handle a production bug reported by users.",
-    "Design a simple login system for a web app.",
-    "How do you optimize frontend performance in a React app?",
-    "How would you handle API failures in a frontend application?"
-  ];
-
-  return questions[Math.floor(Math.random() * questions.length)];
-};
-
-const fallbackAnswer = () => {
-  return "Good answer. Score: 7/10. Improve structure, add real-world examples, and explain your thought process more clearly.";
-};
-
-/* ---------------- Gemini Call ---------------- */
-const callGemini = async (prompt) => {
+/* ---------------- GROQ CALL ---------------- */
+const callAI = async (prompt) => {
   try {
     const res = await axios.post(
-      `https://generativelanguage.googleapis.com/v1/${MODEL}:generateContent?key=${GEMINI_API_KEY}`,
+      "https://api.groq.com/openai/v1/chat/completions",
       {
-        contents: [
+        model: MODEL,
+        messages: [
           {
-            parts: [{ text: prompt }],
+            role: "user",
+            content: prompt,
           },
         ],
+        temperature: 0.7,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${GROQ_API_KEY}`,
+          "Content-Type": "application/json",
+        },
       }
     );
 
-    return (
-      res.data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      null
-    );
+    return res.data.choices?.[0]?.message?.content || null;
   } catch (err) {
-    console.log("🔥 GEMINI ERROR:");
-    console.log(JSON.stringify(err.response?.data, null, 2));
-    console.log(err.message);
-
-    return null; // important for fallback
+    console.log("🔥 GROQ ERROR:", err.response?.data || err.message);
+    return null;
   }
 };
 
-/* ---------------- Generate Question ---------------- */
+/* ---------------- QUESTION GENERATION ---------------- */
 const generateQuestionAI = async (role) => {
   const prompt = `
 You are an expert technical interviewer.
 
-Generate ONE UNIQUE interview question for a ${role}.
-
-Rules:
-- Must be scenario-based (real-world)
-- Must NOT be a common textbook question
-- Focus on debugging, system thinking, or real problems
-- Make it different every time
-- Avoid repeating patterns
-
-Random seed: ${Math.random()}
-
+Generate ONE real-world interview question for a ${role}.
+Make it scenario-based, practical, and job-related.
 Return ONLY the question.
 `;
 
-  const result = await callGemini(prompt);
+  const result = await callAI(prompt);
 
-  // fallback if Gemini fails (quota / error)
-  return result || fallbackQuestion(role);
-};
+  // 🔥 SMART FALLBACK (ONLY IF AI FAILS)
+  const fallbackQuestions = {
+    "Frontend Developer": [
+      "Explain React virtual DOM.",
+      "How do you optimize React performance?",
+      "Difference between state and props?",
+    ],
+    "Backend Developer": [
+      "Design a REST API for task management system.",
+      "What is middleware in Express?",
+      "Explain authentication in Node.js.",
+    ],
+    "Python Developer": [
+      "What are Python decorators?",
+      "Explain list vs tuple.",
+      "What is exception handling?",
+    ],
+    "Java Developer": [
+      "Explain OOP concepts in Java.",
+      "Difference between JVM, JRE, JDK?",
+      "What is Spring Boot used for?",
+    ],
+  };
 
-/* ---------------- Evaluate Answer ---------------- */
-const evaluateAnswerAI = async (question, answer) => {
-  const prompt = `
-You are an AI interview evaluator.
+  if (result) return result;
 
-Question: ${question}
-Answer: ${answer}
-
-Give:
-- Score out of 10
-- Short feedback
-- One improvement tip
-
-Be strict but helpful.
-`;
-
-  const result = await callGemini(prompt);
-
-  // fallback if AI fails
-  return result || fallbackAnswer();
-};
-
-module.exports = {
-  generateQuestionAI,
-  evaluateAnswerAI,
+  const list = fallbackQuestions[role] || fallbackQuestions["Backend Developer"];
+  return list[Math.floor(Math.random() * list.length)];
 };
