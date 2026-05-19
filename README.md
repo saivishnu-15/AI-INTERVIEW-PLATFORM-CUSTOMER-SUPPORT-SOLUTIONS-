@@ -22,7 +22,7 @@ A full-stack AI-powered interview training system that generates technical quest
 - Frontend: React (Vite)
 - Backend: Node.js, Express.js
 - Database: MongoDB
-- AI: Google Gemini API
+- AI: GROQ API
 - Styling: CSS
 
 client/ → React frontend
