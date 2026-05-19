@@ -68,3 +68,40 @@ Requires valid Gemini API key
 MongoDB must be connecteD
 
 ## 📁 Project Structure
+
+AI-Interview-Platform/
+│
+├── client/                     # React Frontend
+│   │
+│   ├── src/
+│   │   ├── App.jsx
+│   │   ├── api.js
+│   │   ├── main.jsx
+│   │   └── index.css
+│   │
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   └── vite.config.js
+│
+├── server/                     # Node Backend
+│   │
+│   ├── models/
+│   │   └── Interview.js
+│   │
+│   ├── routes/
+│   │   └── interviewRoutes.js
+│   │
+│   ├── services/
+│   │   └── aiServices.js
+│   │
+│   ├── config/
+│   │   └── db.js
+│   │
+│   ├── server.js
+│   ├── package.json
+│   └── package-lock.json
+│
+├── .gitignore
+├── README.md
+└── .env
