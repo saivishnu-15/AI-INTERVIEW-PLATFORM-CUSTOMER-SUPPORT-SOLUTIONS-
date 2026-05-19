@@ -2,14 +2,14 @@
 
 # 🤖 AI Interview Preparation Platform
 
-A full-stack AI-powered interview training system that generates technical questions and evaluates answers using Google Gemini API.
+A full-stack AI-powered interview training system that generates technical questions and evaluates answers using GROQ API.
 
 ---
 
 ## 🚀 Features
 
 - 🎯 Role-based interview questions (Frontend, Backend, etc.)
-- 🤖 AI-generated questions using Gemini API
+- 🤖 AI-generated questions using GROQ API
 - 🧠 AI answer evaluation with feedback + scoring
 - 📊 Interview history tracking (MongoDB)
 - 🔁 Fallback system (works even if AI API fails)
@@ -40,7 +40,7 @@ npm install
 
 Create .env file:
 
-GEMINI_API_KEY=your_api_key
+GROQ_API_KEY=your_api_key
 MONGODB_URI=your_mongodb_uri
 
 Run backend:
@@ -64,7 +64,7 @@ Get AI feedback + score
 View history
 
 Note
-Requires valid Gemini API key
+Requires valid GROQ API key
 MongoDB must be connecteD
 
 ## 📁 Project Structure
