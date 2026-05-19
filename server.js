@@ -17,7 +17,7 @@ connectDB();
 
 // DEBUG: check env variables
 console.log("Mongo URI Loaded:", !!process.env.MONGODB_URI);
-console.log("Gemini Key Loaded:", !!process.env.GEMINI_API_KEY);
+
 
 // Routes
 app.use("/api", routes);
